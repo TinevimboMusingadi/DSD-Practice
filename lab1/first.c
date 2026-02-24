@@ -29,23 +29,34 @@ int *arr = (int*)malloc(n * sizeof(int));
 for (int i = 0; i < n; i++) arr[i] = i; // Populate with sorted data
 
 int key = 99999; // Worst-case scenario (last element)
+	int iterations = 100000; // Number of repetitions to get measurable time
 clock_t start, end;
 double cpu_time_used;
 
-// Benchmarking Linear Search
-start = clock();
-linearSearch(arr, n, key);
-end = clock();
-cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-printf("Linear Search Time: %f seconds\n", cpu_time_used);
+	// Benchmarking Linear Search (run multiple times to get stable timing)
+	start = clock();
+	for (int i = 0; i < iterations; i++) {
+		linearSearch(arr, n, key);
+	}
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	printf("Linear Search Time (total for %d runs): %.9f seconds\n",
+	       iterations, cpu_time_used);
+	printf("Linear Search Time (average per run): %.12f seconds\n",
+	       cpu_time_used / iterations);
 
-// Benchmarking Binary Search
-start = clock();
-binarySearch(arr, n, key);
-end = clock();
+	// Benchmarking Binary Search (run multiple times to get stable timing)
+	start = clock();
+	for (int i = 0; i < iterations; i++) {
+		binarySearch(arr, n, key);
+	}
+	end = clock();
 
-cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-printf("Binary Search Time: %f seconds\n", cpu_time_used);
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	printf("Binary Search Time (total for %d runs): %.9f seconds\n",
+	       iterations, cpu_time_used);
+	printf("Binary Search Time (average per run): %.12f seconds\n",
+	       cpu_time_used / iterations);
 
 free(arr);
 return 0;
