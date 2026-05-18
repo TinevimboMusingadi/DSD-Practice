@@ -16,10 +16,10 @@ async def async_function(test_param: str) -> str :
 
 	return f"Async results :{test_param}"
 
-async def main:
-	sync_result = sync_function("Test")
+async def main():
+    sync_result = sync_function("Test")
 
-	print(sync_result)
+    print(sync_result)
 
 
 
